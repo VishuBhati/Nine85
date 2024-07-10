@@ -1,0 +1,205 @@
+from tkinter import *
+from tkinter import scrolledtext
+from tkinter import messagebox
+from tkinter.ttk import Progressbar
+from tkinter import filedialog
+from tkinter import Menu
+from tkinter import ttk
+from PIL import Image,ImageTk
+
+
+
+global w1
+
+#===========print value from all component=========
+def printvalue():
+    s=""
+    #s=e1.get()    # for Entry box
+    #s=c.get()      #  for combo box
+    #s=selected.get()     #  for Radio Button
+    #s=sb.get()     #  for Spin Box Button
+    #s=Lb1.get(Lb1.curselection())    #  for List box Button
+    
+    #s=fc.get()                    #  get checkbox value
+    
+    print(s)
+    
+    import time                       # fo progress bar move  
+    for i in range(105):
+        bar['value']=i                       
+        time.sleep(.01)
+        w1.update_idletasks()
+           
+  
+
+
+w1=Tk()
+w1.geometry('800x600+150+100')
+w1.configure(bg="black")
+w1.title("Nine85")
+
+#=========================Lable example ======================================
+lbl = Label(w1, text = "Make Your Projects Easier",bg="black",fg="grey", font = ("Arial Bold",30))
+lbl.place(x=175,y=5)
+s="Programming Python by Vishu Bhati Mo: 7357130627 for Class XI-XII CBSE Computer Science Email vb6024727@gmail.com"
+lb2 = Label(w1, text = s,bg='black',fg='yellow', font = ("Arial Bold",8))
+lb2.place(x=10,y=570)
+
+
+#======================Understand Entry box here ==========================
+Label(w1,text='Enter your Name here',bg="black",fg='red').place(x=20,y=150)
+e1=Entry(w1,width=22)
+e1.place(x=20,y=170)
+#========================combo box==============================
+Label(w1,text='Combobox',bg="black",fg='red').place(x=20,y=200)
+c=ttk.Combobox(w1, width=20, values=[1,2,3,4,5] )
+c.place(x=20,y=217)
+c.current(1)
+
+
+#========================Radio Button=================================
+
+Label(w1,text='Radio Button',bg="black",fg='red').place(x=350,y=200)
+selected = IntVar()
+rad1 = Radiobutton(w1,text='First', value=1,bg="black",fg="red", variable=selected).place(x=350,y=220)
+rad2 = Radiobutton(w1,text='Second', value=2,bg="black",fg="red", variable=selected).place(x=350,y=240)
+rad3 = Radiobutton(w1,text='Third', value=3,bg="black",fg="red", variable=selected).place(x=350,y=260)
+
+#==========================pin Box=============================
+Label(w1,text='Spin Box',bg="black",fg="red",).place(x=260,y=140)
+sb =Spinbox(w1,from_=0, to=10,width=5)
+sb.place(x=260,y=170)
+
+#========================List Box=================================
+Label(w1,text='List Box',bg="black",fg='red').place(x=30,y=270)
+mylist=["Python","Perl","C","PHP","Ruby"]
+Lb1 = Listbox(w1,width=23)
+for i in range(1,5):
+    Lb1.insert(i, mylist[i-1])
+Lb1.place(x=20,y=300)
+
+#========================Progressbar======================================
+Label(w1,text='Progressbar',bg="black",fg='red').place(x=30,y=520)
+bar = Progressbar(w1, length = 750,value=5,mode='determinate')
+bar.place(x=30,y=540)
+
+#=======================open a text file============================
+def opentextfile():
+    f=filedialog.askopenfile()
+    s=f.read()
+    print(s)
+    tarea.delete(1.0,END)
+    tarea.insert(INSERT,s)
+    
+ofs=Button(w1,text="ReadFiles",width=7,command=opentextfile,bg="grey",fg="black").place(x=180,y=160)
+
+#=========================select file names====================
+def openfile():
+    s=filedialog.askopenfilenames()
+    print(s)
+    
+ofs=Button(w1,text="Open Files",width=7,command=openfile,bg="grey",fg="black").place(x=180,y=200)
+
+
+#=====================select a folder==============================
+def opendir():
+    s=filedialog.askdirectory()
+    print(s)
+
+ofs=Button(w1,text="Folder",width=7,command=opendir,bg="grey",fg="black").place(x=180,y=240)
+#====================all message box=========================
+
+def msgbox():
+    messagebox.showinfo('showinfo', 'showinfo')
+    messagebox.askquestion('askquestion', 'askquestion') # yes no
+    messagebox.askyesno('Maskyesno', 'Maskyesno')
+    messagebox.askokcancel('askokcancel', 'askokcancel')
+    messagebox.askretrycancel('askretrycancel', 'askretrycancel')
+    s=messagebox.askyesnocancel('askyesnocancel', 'askyesnocancel')
+    print(s)
+ofs=Button(w1,text="MsgBox",width=7,command=msgbox,bg="grey",fg="black").place(x=180,y=280)
+#===========================FONT PICKER===============================
+def fontchose():
+    from tkfontchooser import askfont   # pip install tkfontchooser
+    font = askfont(w1) 
+    print(font)
+
+
+ofs=Button(w1,text="Font",width=7,command=fontchose,bg="grey",fg="black").place(x=180,y=320)
+#========================color chooser===========================
+
+def colorchose():
+    from tkinter import colorchooser
+    color_code = colorchooser.askcolor(title ="Choose color") 
+    print(color_code)
+
+
+ofs=Button(w1,text="Color",width=7,command=colorchose,bg="grey",fg="black").place(x=180,y=360)
+#====================menu option in window===============
+def show():
+    print("Under Construction")
+    
+menu = Menu(w1)
+w1.config(menu=menu)
+
+itm = Menu(menu) 
+itm.add_command(label='New', command=show)
+itm.add_command(label='Exit', command=show) 
+
+menu.add_cascade(label='File', menu=itm)
+
+
+#========================scrolledtext=======================
+Label(w1,text='scrolledtext',bg="black",fg='red').place(x=250,y=280)
+tarea = scrolledtext.ScrolledText(w1,wrap=WORD,bg="black",fg="grey",width = 40,height = 10)
+tarea.place(x=250,y=300)
+tarea.insert(INSERT,"Vishu Bhati Welcomes You") 
+
+
+#==================PUT IMAGE ON CANVAS=========================
+from PIL import Image
+image = Image.open('Zoro HDR.png')
+new_image = image.resize((150, 150))
+new_image.save('vb.png')
+
+Label(w1,text='Canvas Image',bg="black",fg='red').place(x=620,y=270)
+bg = PhotoImage(file="vb.png")
+canvas1 = Canvas( w1, width = 150,height = 200) 
+canvas1.place(x=600,y=300)
+canvas1.create_image( 20, 20, image=bg, anchor = "nw") 
+#========================Check Button==================================
+
+fc=IntVar()
+pc=IntVar()
+Label(w1,text='Check Button',bg="black",fg='red').place(x=250,y=200)
+c1=Checkbutton(w1, text = "File",bg="black",fg="red",variable = fc)
+c1.place(x=250,y=220)
+c2=Checkbutton(w1, text = "Project",bg="black",fg="red", variable = pc)
+c2.place(x=250,y=250)
+
+#==========================CANVAS============================
+can = Canvas(w1, bg="black", height=120, width=120)
+can.place(x=20,y=5)
+
+fnm=PhotoImage(file="fhrs.gif")   # 105 x 105 px in mspaint
+image=can.create_image(60,60,image=fnm)
+
+#======================frame ==================================
+frame = Frame(w1,width=330,height=150,bg='black')
+frame.place(x=400,y=50)
+xx,yy=10,10
+for i in range(6):
+    xx=10
+    for j in range(5):
+        t=Entry(frame,width=10)
+        t.place(x=xx,y=yy)
+        xx=xx+60
+    yy=yy+20
+
+#===================================================================
+
+a=Button(w1,text='Check Value',bg="grey",fg="black",command=printvalue)
+a.place(x=450,y=250)
+
+
+w1.mainloop()
